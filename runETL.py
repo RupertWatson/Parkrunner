@@ -130,7 +130,7 @@ else:
 
 # For each Parkrun event, access results page and extract data
 
-for parkrun_id, parkrun_name in enumerate(uk_parkruns[0:2]):
+for parkrun_id, parkrun_name in enumerate(uk_parkruns):
     # Construct url
     url = f"{base_url}{parkrun_name['eventname']}/results/latestresults/" 
     response = make_a_request(url, headers=HEADERS)
