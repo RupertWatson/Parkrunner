@@ -17,7 +17,7 @@
 3. **Data Extraction and Insertion**  
    Run the extraction script using:
 
-   python runETL.py
+   `python runETL.py`
 
    The script will:
     Get a list of all UK parkrun events.
