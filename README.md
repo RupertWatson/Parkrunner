@@ -15,11 +15,11 @@
    pip install -r requirements.txt
    
 3. **Data Extraction and Insertion**
-    Run the extraction script using:
+   Run the extraction script using:
 
-    python runETL.py
+   python runETL.py
 
-    The script will:
+   The script will:
     Get a list of all UK parkrun events.
     Request the url from each event's most recent result page.
     Etract and store the result data from each event.
