@@ -14,7 +14,7 @@
    Ensure all necessary packages are installed by running:
    pip install -r requirements.txt
    
-3. **Data Extraction and Insertion**
+3. **Data Extraction and Insertion**  
    Run the extraction script using:
 
    python runETL.py
@@ -28,6 +28,6 @@
 
 ## Cron Details
 
-The extraction script should be scheduled to run weekly on a weekday(e.g. Every Monday at 10 PM GMT). 
-The extraction process should take between 2-4 hours, due to request delays to reduce server load.
+The extraction script should be scheduled to run **weekly on a weekday**(e.g. Every Monday at 10 PM GMT). 
+The extraction process should take between **2-4 hours**, due to request delays to reduce server load.
 Please do not run the script on weekends.
