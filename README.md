@@ -3,12 +3,12 @@
 ## Extraction Script Instructions
 
 1. **Environment Setup**  
-   An `.env` file is included in the project root with the following variables:
-   - `DB_HOST`: The hostname of your database.
-   - `DB_PORT`: The port number for the database connection.
-   - `DB_USER`: The username for database access.
-   - `DB_PASSWORD`: The password associated with the database user.
-   - `DB_NAME`: The name of the target database.
+   An `.env` file must be included in the project root with the following variables:
+   - `DB_HOST`
+   - `DB_PORT`
+   - `DB_USER`
+   - `DB_PASSWORD`
+   - `DB_NAME`
 
 2. **Dependency Installation**  
    Ensure all necessary packages are installed by running:
