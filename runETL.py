@@ -35,6 +35,12 @@ def make_a_request(link, headers, max_retries=5, wait_time=4):
                 print(f"Error 503: Service Unavailable. Retrying in {wait_time} seconds...")
                 time.sleep(wait_time)  # Wait before retrying
                 wait_time *= 2  # Increase the wait time for the next attempt
+            elif response.status_code == 202:
+                print(f"Request accepted. Processing in the background... Attempt {attempt + 1}")      
+                # Wait before checking the status again
+                time.sleep(wait_time)
+                wait_time *= 2  # Exponential backoff
+                continue  # Retry after the wait time
             # For other errors, print the status code and return None
             else:
                 print(f"Error: Received status code {response.status_code}")
@@ -212,7 +218,7 @@ database = os.getenv("DB_NAME")
 username = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 
-table_name = 'rw_parkrun'
+table_name = 'rw_parkrun_2'
 schema_name = 'student'
 
 # Create the SQLAlchemy engine
