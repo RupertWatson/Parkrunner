@@ -2,36 +2,13 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-#from utils.db_connection import get_db_connection 
+from utils.db_connection import get_db_connection 
 import ast
 import altair as alt
 import re
 from sqlalchemy import create_engine
 import os
 
-def get_db_connection():
-    """
-    Establish and return a connection to the PostgreSQL database.
-    """
-    # Load environment variables from .env file
-    #load_dotenv()
-
-    # Define the connection details
-    hostname = st.secrets["DB_HOST"]
-    port = st.secrets["DB_PORT"]
-    database = st.secrets["DB_NAME"]
-    username = st.secrets["DB_USER"]
-    password = st.secrets["DB_PASSWORD"]
-    
-    try:
-        # Create the connection string
-        engine = create_engine(f"postgresql://{username}:{password}@{hostname}:{port}/{database}")
-        connection = engine.connect()
-        print("Database connection successful.")
-        return connection
-    except Exception as e:
-        print(f"Error connecting to the database: {e}")
-        return None
 
 st.set_page_config(
     page_title="Parkrunner",
@@ -122,10 +99,10 @@ col1, col2, col3 = st.columns([1, 3, 1])
 # if event.selection.indices:
 #     col1.metric("Finishers:", format_number_with_commas(int(participant_count_df.iloc[0,0])), border=True)
 # else:
-col1.metric(":orange[Finishers]", format_number_with_commas(int(participant_count_df.iloc[0,0])), border=True)
-col1.metric(":orange[Locations]", format_number_with_commas(int(event_count_df.iloc[0,0])), border=True)
-col1.metric(":orange[Personal Bests]", format_number_with_commas(int(pb_count_df.iloc[0,0])), border=True)
-col1.metric(":orange[Earths circumnavigated]", round((int(participant_count_df.iloc[0,0]) * 5) / 40075, 1), border=True)
+col1.metric(":orange[Finishers]", format_number_with_commas(int(participant_count_df.iloc[0,0])), border=True, help="Number of Parkrun finishers in the UK this week")
+col1.metric(":orange[Locations]", format_number_with_commas(int(event_count_df.iloc[0,0])), border=True, help="Number of Parkrun events held in the UK this week")
+col1.metric(":orange[Personal Bests]", format_number_with_commas(int(pb_count_df.iloc[0,0])), border=True, help="Number of Personal Best times achieved in the UK this week")
+col1.metric(":orange[Earths circumnavigated]", round((int(participant_count_df.iloc[0,0]) * 5) / 40075, 1), border=True, help="Number of times Parkrunners collectively ran around the Earth this week")
 
 # Chart setup
 # Gender Chart
@@ -137,8 +114,9 @@ gender_chart = alt.Chart(gender_df).mark_arc(innerRadius=30).encode(
     tooltip=[alt.Tooltip('Gender:N', title='Gender'),  
              alt.Tooltip('count:Q', title='Finishers')]  
 ).properties(
-    width=200,  # Increase chart width
-    height=200  # Increase chart height
+    title="Gender Breakdown",
+    width=200, 
+    height=200  
 )
 # Age Chart
 age_groups = {
@@ -171,6 +149,7 @@ age_chart = alt.Chart(collapsed_age_df.reset_index()).mark_bar(color='orange').e
     tooltip=[alt.Tooltip('Age Group:N', title='Age Group'),  # Tooltip for Age Group
              alt.Tooltip('count:Q', title='Finishers')]  # Tooltip for Count
 ).properties(
+    title="Age Breakdown",
     width=200,  # Set width of the chart
     height=300  # Set height of the chart
 )

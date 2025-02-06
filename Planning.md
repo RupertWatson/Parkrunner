@@ -18,15 +18,13 @@ So, my goal is to make insights into Parkruns on a National level via a Streamli
 ### Top Level Data Flow Diagram
 
 ```mermaid
-flowchart TD
+flowchart LR
     A@{ shape: cyl, label: "Data Source: 
     Online Results Tables"} --> B@{ shape: tri, label: "Extract 
     Data via
     webscraping"}
     B --> C[Data Cleaning
     with Pandas]
-    B --> C1[Save data as 
-    .csv for backup]
     C --> D[Data Transformation
     with Pandas]
     D --> E[Load data into Postgres DB]
@@ -38,12 +36,12 @@ flowchart TD
 
 - [X] Get a list of all Parkrun events within the UK
 - [X] Scrape the results from all UK parkruns, storing the data in a list of dictionaries.
-- [ ] Load the data into a Pandas Dataframe
-- [ ] Clean the dataset
-- [ ] Transform the dataset
-- [ ] Load the data into Pagilla Database
-- [ ] Build a Streamlit Application to make visualisations
-- [ ] Deploy the pipeline, updating the dataset on a weekly basis
+- [X] Load the data into a Pandas Dataframe
+- [X] Clean the dataset
+- [X] Transform the dataset
+- [X] Load the data into Pagilla Database
+- [X] Build a Streamlit Application to make visualisations
+- [X] Deploy the pipeline, updating the dataset on a weekly basis
 
 
 ## Ethical Considerations Concerning Webscraping

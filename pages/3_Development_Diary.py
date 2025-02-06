@@ -1,54 +1,58 @@
 import streamlit as st
 import pandas as pd
 
-st.title("Planning and Development")
-st.markdown("# Capstone Project - ParkRunner")
+st.title("Planning and Development 🛠️")
+st.divider()
 st.markdown("## Project Brief")
 st.markdown('''
-            One of my favourite things about living in the UK is [Parkrun](https://www.parkrun.org.uk/). Parkrun is a weekly 5km run that takes place every Saturday morning in over 800 locations across the UK. I love how it forms stronger local communities and is focused on inclusivity. 
+           The goal of this project is to provide national level insights into UK-based Parkrun results. Parkrun is a :orange[weekly 5km run] held every Saturday in :orange[over 800 locations] across the UK, focused on strengthening local communities and inclusivity. While individual event results are available on the [Parkrun website](https://www.parkrun.org.uk/), there is no easy way to view and compare results across multiple locations.
 
-On the [Parkrun website](https://www.parkrun.org.uk/), results from each Parkrun event are accessible individually and are updated weekly. But wouldn't it be great to be able to view results across various parkruns - We would then be able to find the fastest times from the given week, compare statistics about your local Parkrun compared to national averages, and make demographic analysis such as age distributions.
-
-So, my goal is to make insights into Parkruns on a National level via a Streamlit Application. To do this, I will build an ETL pipeline that will extract the data from the Parkrun website, clean and transform the data in Pandas, store the data in a Postgres Pagilla database, and run queries on the data in order to make visualisations on Streamlit.
-            ''')
+This project involved building an ETL pipeline to extract data from the Parkrun website on a weekly schedule and generate visualisations in Streamlit. The application will highlight the :orange[fastest times of the week], compare local Parkrun stats to :orange[national averages], and analyse demographics such as :orange[age distributions].            ''')
+st.divider()
 st.markdown('''
             ## Project Scope
 
-- Each week, obtain only the most recent parkrun results for each location. Not focused on historical trends.
-- Only obtain data for Parkrun events within the U.K. (not including Junior Parkruns)
+- Each week, obtain only the ***most recent*** parkrun results for each location.
+- Only obtain data for Parkrun events within the ***U.K***. 
 
-## Data Flow Diagram
-
-### Top Level Data Flow Diagram
 ''')
-
-
+st.divider()
+st.markdown("## Data Flow Diagram")
+st.image('flowchartlr.png')
+st.divider()
 st.markdown('''
 ## Project Backlog
 
 - [X] Get a list of all Parkrun events within the UK
-- [X] Scrape the results from all UK parkruns, storing the data in a list of dictionaries.
-- [X] Load the data into a Pandas Dataframe
-- [X] Clean the dataset
-- [X] Transform the dataset
+- [X] Scrape the results from all UK parkruns
+- [X] Clean the results
+- [X] Transform the results
 - [X] Load the data into Pagilla Database
 - [X] Build a Streamlit Application to make visualisations
-- [X] Deploy the pipeline, updating the dataset on a weekly basis
-
-
+- [ ] Deploy the pipeline, updating the dataset on a weekly basis
+'''
+)
+st.divider()
+st.markdown('''
 ## Ethical Considerations Concerning Webscraping
 
 I researched how I could obtain the Parkrun data. Unfortunately, there is no publicly available Parkrun API, so I opted to scrape the data from their website. To ensure ethical use of their data, I adhered to the following practices:
 
-1. Ensure that requests are not made during peak times (Do not run the extraction on weekends, when the public will be checking recent results)
-2. Add a wait time between requests to reduce server load.
+1. Ensure that requests are not made during peak times.
+2. Add a wait time between requests.
 3. Only extract publicly accessible data.
 4. Do not use the data for personal monetary gain.
 5. If I was to expand on and update this project further, I would contact the Parkrun administrators for guidance.
-
-By following these considerations, I aimed to balance the project's objectives with respect for Parkrun's resources and intellectual property.
             ''')
-
+st.divider()
 st.markdown('''
-## Reflections and Challenges
+## Challenges
+- Webscraping was difficult due to inconsistencies between result tables and handling missing data.
+- Difficulty when running the ETL process from a cloud VM
+            ''')
+st.divider()
+st.markdown('''
+## Possible next steps
+- Include data from other countries
+- Add historical results to compare trends 
             ''')
