@@ -2,10 +2,36 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-from utils.db_connection import get_db_connection 
+#from utils.db_connection import get_db_connection 
 import ast
 import altair as alt
 import re
+from sqlalchemy import create_engine
+import os
+
+def get_db_connection():
+    """
+    Establish and return a connection to the PostgreSQL database.
+    """
+    # Load environment variables from .env file
+    #load_dotenv()
+
+    # Define the connection details
+    hostname = st.secrets["DB_HOST"]
+    port = st.secrets["DB_PORT"]
+    database = st.secrets["DB_NAME"]
+    username = st.secrets["DB_USER"]
+    password = st.secrets["DB_PASSWORD"]
+    
+    try:
+        # Create the connection string
+        engine = create_engine(f"postgresql://{username}:{password}@{hostname}:{port}/{database}")
+        connection = engine.connect()
+        print("Database connection successful.")
+        return connection
+    except Exception as e:
+        print(f"Error connecting to the database: {e}")
+        return None
 
 st.set_page_config(
     page_title="Parkrunner",
@@ -96,35 +122,41 @@ col1, col2, col3 = st.columns([1, 3, 1])
 # if event.selection.indices:
 #     col1.metric("Finishers:", format_number_with_commas(int(participant_count_df.iloc[0,0])), border=True)
 # else:
-col1.metric("Finishers", format_number_with_commas(int(participant_count_df.iloc[0,0])), border=True)
-
-col1.metric("Locations", format_number_with_commas(int(event_count_df.iloc[0,0])), border=True)
-col1.metric("Personal Bests", format_number_with_commas(int(pb_count_df.iloc[0,0])), border=True)
-col1.metric("Earths circumnavigated", round((int(participant_count_df.iloc[0,0]) * 5) / 40075, 1), border=True)
+col1.metric(":orange[Finishers]", format_number_with_commas(int(participant_count_df.iloc[0,0])), border=True)
+col1.metric(":orange[Locations]", format_number_with_commas(int(event_count_df.iloc[0,0])), border=True)
+col1.metric(":orange[Personal Bests]", format_number_with_commas(int(pb_count_df.iloc[0,0])), border=True)
+col1.metric(":orange[Earths circumnavigated]", round((int(participant_count_df.iloc[0,0]) * 5) / 40075, 1), border=True)
 
 # Chart setup
 # Gender Chart
-colour_scheme = alt.Scale(domain=["Male", "Female"], range=["#1f77b4", "#ff70ec"])
+colour_scheme = alt.Scale(domain=["Male", "Female"], range=["#f54b42", "#f5bf36"])
 
 gender_chart = alt.Chart(gender_df).mark_arc(innerRadius=30).encode(
     theta=alt.Theta(field="count", type="quantitative"),
     color=alt.Color(field="Gender", type="nominal", scale=colour_scheme),
+    tooltip=[alt.Tooltip('Gender:N', title='Gender'),  
+             alt.Tooltip('count:Q', title='Finishers')]  
 ).properties(
     width=200,  # Increase chart width
     height=200  # Increase chart height
 )
 # Age Chart
-
-# Function to recategorize age groups into Junior, Senior, or Veteran
+age_groups = {
+    '1': '10-19',
+    '2': '20-29',
+    '3': '30-39',
+    '4': '40-49',
+    '5': '50-59',
+    '6': '60-69',
+    '7': '70+',
+    '8': '70+',
+    '9': '70+'
+}
 def recategorize_age_group(age_group):
-    if age_group[0] == 'J':
-        return 'Junior (10-17)'
-    elif age_group[0] == 'S':
-        return 'Senior (18-34)'
-    elif age_group[0] == 'V':
-        return 'Veteran (35+)'
+    if age_group[2] in age_groups:
+        return age_groups[age_group[2]]
     else:
-        return None  # Return None for categories that do not match J, S, or V
+        return None  # Return None for categories that do not match
 
 # Apply the function to the 'Age Group' column and create a new 'Category' column
 age_df['Age Group'] = age_df['Age Group'].apply(recategorize_age_group)
@@ -133,14 +165,14 @@ age_df['Age Group'] = age_df['Age Group'].apply(recategorize_age_group)
 age_df = age_df.dropna(subset=['Age Group'])
 collapsed_age_df = age_df.groupby('Age Group').sum()
 
-age_chart = alt.Chart(collapsed_age_df.reset_index()).mark_arc(innerRadius=30).encode(
-    theta=alt.Theta(field="count", type="quantitative"),
-    color=alt.Color(field="Age Group", type="nominal"),
-    tooltip=[alt.Tooltip('Age Group:N', title='Age Group'),
-             alt.Tooltip('count:Q', title='Count')]
+age_chart = alt.Chart(collapsed_age_df.reset_index()).mark_bar(color='orange').encode(
+    x=alt.X('count:Q', title='Number of Finishers'),  # Quantitative count on the x-axis
+    y=alt.Y('Age Group:N', title='Age Group', sort='descending'),  # Nominal age group on the y-axis
+    tooltip=[alt.Tooltip('Age Group:N', title='Age Group'),  # Tooltip for Age Group
+             alt.Tooltip('count:Q', title='Finishers')]  # Tooltip for Count
 ).properties(
-    width=200,  # Increase chart width
-    height=200  # Increase chart height
+    width=200,  # Set width of the chart
+    height=300  # Set height of the chart
 )
 
 with col3:
