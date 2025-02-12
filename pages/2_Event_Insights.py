@@ -2,10 +2,32 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-from utils.db_connection import get_db_connection
+#from utils.db_connection import get_db_connection
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+from sqlalchemy import create_engine
+
+def get_db_connection():
+    """
+    Establish and return a connection to the PostgreSQL database.
+    """
+    # Define the connection details
+    hostname=st.secrets["DB_HOST"],
+    port=int(st.secrets["DB_PORT"]),
+    database=st.secrets["DB_NAME"],
+    username=st.secrets["DB_USER"],
+    password=st.secrets["DB_PASSWORD"]
+    
+    try:
+        # Create the connection string
+        engine = create_engine(f"postgresql://{username}:{password}@{hostname}:{port}/{database}")
+        connection = engine.connect()
+        print("Database connection successful.")
+        return connection
+    except Exception as e:
+        print(f"Error connecting to the database: {e}")
+        return None
 
 # Connect to the database
 connection = get_db_connection()
