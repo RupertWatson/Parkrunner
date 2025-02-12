@@ -32,7 +32,7 @@ def get_db_connection():
 
 st.set_page_config(
     page_title="Parkrunner",
-    page_icon="🏃",
+    #page_icon="🏃",
     layout="wide"
 )
 
