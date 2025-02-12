@@ -92,7 +92,7 @@ else:
 def format_number_with_commas(number):
     return f"{number:,}"
 
-st.title("Welcome to :orange[Parkrunner] UK! 🏃")
+st.title("Welcome to :orange[Parkrunner]! 🏃")
 
 col1, col2, col3 = st.columns([1, 3, 1])
 

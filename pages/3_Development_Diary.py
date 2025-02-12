@@ -1,13 +1,15 @@
 import streamlit as st
 import pandas as pd
 
-st.title("Planning and Development 🛠️")
+st.title(":orange[Parkrunner] - Planning and Development 🛠️")
 st.divider()
 st.markdown("## Project Brief")
 st.markdown('''
-           The goal of this project is to provide national level insights into UK-based Parkrun results. Parkrun is a :orange[weekly 5km run] held every Saturday in :orange[over 800 locations] across the UK, focused on strengthening local communities and inclusivity. While individual event results are available on the [Parkrun website](https://www.parkrun.org.uk/), there is no easy way to view and compare results across multiple locations.
+           - Parkrun is a free :orange[weekly 5km run] held every Saturday. While individual event results are available on the [Parkrun website](https://www.parkrun.org.uk/), there is no easy way to view and compare results across multiple locations.
 
-This project involved building an ETL pipeline to extract data from the Parkrun website on a weekly schedule and generate visualisations in Streamlit. The application will highlight the :orange[fastest times of the week], compare local Parkrun stats to :orange[national averages], and analyse demographics such as :orange[age distributions].            ''')
+- So, the goal of this project is to provide :orange[national level insights] into UK-based Parkrun results.
+
+- This project involved building an ETL pipeline to extract data from the Parkrun website on a weekly schedule and generate visualisations in Streamlit. The application will highlight the :orange[fastest times of the week], compare local Parkrun stats to :orange[national averages], and analyse demographics such as :orange[age distributions].            ''')
 st.divider()
 st.markdown('''
             ## Project Scope

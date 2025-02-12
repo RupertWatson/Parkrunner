@@ -59,9 +59,6 @@ st.title("Event Insights 📊")
 selected_location = st.selectbox("Select a :orange[Parkrun] from the list:", filtered_event_df["Location"].tolist(), index=None, placeholder="Select Parkrun",)
 
 # Insights
-if selected_location:
-    selection_string = f"You have selected :orange[{selected_location}]."
-    st.markdown(selection_string)
 tab1, tab2 = st.tabs(["Pace Comparison", "Demographics"])
 # st.dataframe(filtered_event_df, use_container_width=True, hide_index=True)
 
@@ -213,7 +210,7 @@ if selected_location:
         )
         fig.update_traces(
             hovertemplate='<b>%{y}</b><br>' +  # Show Age Group
-                            'Fraction: %{x:.2f}%<br>'
+                            'Fraction: %{x:.2f}<br>'
         )
         
         # Age Speed chart
@@ -235,7 +232,7 @@ if selected_location:
         )
         fig2.update_traces(
             hovertemplate='<b>%{x}</b><br>' +  # Show Age Group
-                            'Local Average: %{y:.1f} mins<br>'
+                            'Average: %{y:.1f} mins<br>'
         )
         # Display charts in Streamlit
         st.plotly_chart(fig) 
