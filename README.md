@@ -1,5 +1,16 @@
 # Parkrunner Data Pipeline Project
 
+## Streamlit Preview
+
+<p float="left">
+  <img src="/images/preview_1.png" width="150" />
+  <img src="/images/preview_2.png" width="150" /> 
+</p>
+<p float="left">
+  <img src="/images/preview_3.png" width="150" />
+  <img src="/images/preview_4.png" width="150" /> 
+</p>
+
 ## Extraction Script Instructions
 
 1. **Environment Setup**  
