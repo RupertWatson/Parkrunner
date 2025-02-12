@@ -13,11 +13,12 @@ def get_db_connection():
     Establish and return a connection to the PostgreSQL database.
     """
     # Define the connection details
-    hostname=st.secrets["DB_HOST"],
-    port=int(st.secrets["DB_PORT"]),
-    database=st.secrets["DB_NAME"],
-    username=st.secrets["DB_USER"],
+    hostname=st.secrets["DB_HOST"]
+    port=st.secrets["DB_PORT"]
+    database=st.secrets["DB_NAME"]
+    username=st.secrets["DB_USER"]
     password=st.secrets["DB_PASSWORD"]
+    
     
     try:
         # Create the connection string
